@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 
-// import 'package:provider/provider.dart';
+import 'package:provider/provider.dart';
 
 import '../rendering/board_overlay.dart';
 import '../utils/log.dart';
@@ -133,33 +133,40 @@ class AppFlowyBoard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final boardState = AppFlowyBoardState();
-    final phantomController = BoardPhantomController(
-      delegate: controller,
-      groupsState: boardState,
-    );
+    return ChangeNotifierProvider.value(
+      value: controller,
+      child: Consumer<AppFlowyBoardController>(
+        builder: (context, notifier, child) {
+          final boardState = AppFlowyBoardState();
+          final phantomController = BoardPhantomController(
+            delegate: controller,
+            groupsState: boardState,
+          );
 
-    if (boardScrollController != null) {
-      boardScrollController!._boardState = boardState;
-    }
+          if (boardScrollController != null) {
+            boardScrollController!._boardState = boardState;
+          }
 
-    return _AppFlowyBoardContent(
-      config: config,
-      boardController: controller,
-      scrollController: scrollController,
-      scrollManager: boardScrollController,
-      boardState: boardState,
-      onNewGroupTapped: onNewGroupTapped,
-      background: background,
-      delegate: phantomController,
-      groupConstraints: groupConstraints,
-      cardBuilder: cardBuilder,
-      footerBuilder: footerBuilder,
-      headerBuilder: headerBuilder,
-      phantomController: phantomController,
-      onReorder: controller.moveGroup,
-      leading: leading,
-      trailing: trailing,
+          return _AppFlowyBoardContent(
+            config: config,
+            boardController: controller,
+            scrollController: scrollController,
+            scrollManager: boardScrollController,
+            boardState: boardState,
+            onNewGroupTapped: onNewGroupTapped,
+            background: background,
+            delegate: phantomController,
+            groupConstraints: groupConstraints,
+            cardBuilder: cardBuilder,
+            footerBuilder: footerBuilder,
+            headerBuilder: headerBuilder,
+            phantomController: phantomController,
+            onReorder: controller.moveGroup,
+            leading: leading,
+            trailing: trailing,
+          );
+        },
+      ),
     );
   }
 }
@@ -276,36 +283,34 @@ class _AppFlowyBoardContentState extends State<_AppFlowyBoardContent> {
       widget.boardState.reorderFlexActionMap[columnData.id] = reorderFlexAction;
 
       children.add(
-        KeyedSubtree(
+        ChangeNotifierProvider.value(
           key: ValueKey(columnData.id),
-          // value: widget.boardController.getGroupController(columnData.id),
-          child: ConstrainedBox(
-            constraints: widget.groupConstraints,
-            child: AppFlowyBoardGroup(
-              margin: _marginFromIndex(columnIndex),
-              bodyPadding: widget.config.groupBodyPadding,
-              onNewGroupTapped: widget.onNewGroupTapped,
-              headerBuilder: _buildHeader,
-              footerBuilder: widget.footerBuilder,
-              cardBuilder: widget.cardBuilder,
-              dataSource: dataSource,
-              scrollController: ScrollController(),
-              phantomController: widget.phantomController,
-              onReorder: (groupId, fromIndex, toIndex) {
-                widget.boardController
-                    .moveGroupItem(groupId, fromIndex, toIndex);
-                setState(() {});
-              },
-              cornerRadius: widget.config.groupCornerRadius,
-              backgroundColor: widget.config.groupBackgroundColor,
-              dragStateStorage: widget.boardState,
-              dragTargetKeys: widget.boardState,
-              reorderFlexAction: reorderFlexAction,
-              stretchGroupHeight: widget.config.stretchGroupHeight,
-              onDragStarted: (index) {
-                widget.boardController.onStartDraggingCard
-                    ?.call(columnData.id, index);
-              },
+          value: widget.boardController.getGroupController(columnData.id),
+          child: Consumer<AppFlowyGroupController>(
+            builder: (context, value, child) => ConstrainedBox(
+              constraints: widget.groupConstraints,
+              child: AppFlowyBoardGroup(
+                margin: _marginFromIndex(columnIndex),
+                bodyPadding: widget.config.groupBodyPadding,
+                onNewGroupTapped: widget.onNewGroupTapped,
+                headerBuilder: _buildHeader,
+                footerBuilder: widget.footerBuilder,
+                cardBuilder: widget.cardBuilder,
+                dataSource: dataSource,
+                scrollController: ScrollController(),
+                phantomController: widget.phantomController,
+                onReorder: widget.boardController.moveGroupItem,
+                cornerRadius: widget.config.groupCornerRadius,
+                backgroundColor: widget.config.groupBackgroundColor,
+                dragStateStorage: widget.boardState,
+                dragTargetKeys: widget.boardState,
+                reorderFlexAction: reorderFlexAction,
+                stretchGroupHeight: widget.config.stretchGroupHeight,
+                onDragStarted: (index) {
+                  widget.boardController.onStartDraggingCard
+                      ?.call(columnData.id, index);
+                },
+              ),
             ),
           ),
         ),
@@ -319,10 +324,10 @@ class _AppFlowyBoardContentState extends State<_AppFlowyBoardContent> {
     if (widget.headerBuilder == null) {
       return null;
     }
-    // Directly return the headerBuilder with the groupData.
-    // Ensure that your widget listens to changes in the AppFlowyGroupController's headerData
-    // and calls setState to rebuild with the new data.
-    return widget.headerBuilder!(context, groupData)!;
+    return Selector<AppFlowyGroupController, AppFlowyGroupHeaderData>(
+      selector: (context, controller) => controller.groupData.headerData,
+      builder: (context, _, __) => widget.headerBuilder!(context, groupData)!,
+    );
   }
 
   EdgeInsets _marginFromIndex(int index) {
