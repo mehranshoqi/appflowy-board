@@ -1,11 +1,10 @@
 import 'dart:async';
 
+import 'package:appflowy_board/appflowy_board.dart';
 import 'package:flutter/material.dart';
 
-import 'package:appflowy_board/src/widgets/board.dart';
 
 import '../../utils/log.dart';
-
 import 'drag_state.dart';
 import 'drag_target.dart';
 import 'reorder_flex.dart';
@@ -161,12 +160,12 @@ class CrossReorderFlexDragTargetInterceptor extends DragTargetInterceptor {
       /// it means the dragTarget is dragging on the top of its own list.
       /// Otherwise, it means the dargTarget was moved to another list.
       Log.trace(
-        "[$CrossReorderFlexDragTargetInterceptor] $reorderFlexId should accept ${dragTargetData.reorderFlexId} : ${reorderFlexId != dragTargetData.reorderFlexId}",
+        '[$CrossReorderFlexDragTargetInterceptor] $reorderFlexId should accept ${dragTargetData.reorderFlexId} : ${reorderFlexId != dragTargetData.reorderFlexId}',
       );
       return reorderFlexId != dragTargetData.reorderFlexId;
     } else {
       Log.trace(
-        "[$CrossReorderFlexDragTargetInterceptor] not accept ${dragTargetData.reorderFlexId}",
+        '[$CrossReorderFlexDragTargetInterceptor] not accept ${dragTargetData.reorderFlexId}',
       );
       return false;
     }

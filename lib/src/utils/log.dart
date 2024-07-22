@@ -1,4 +1,4 @@
-import "package:flutter/material.dart";
+import 'package:flutter/material.dart';
 
 class Log {
   static const enableLog = false;
@@ -6,7 +6,7 @@ class Log {
   static void trace(String? message) {
     if (enableLog) {
       debugPrint(
-        "${_now()} AppFlowyBoard: 🔎 TRACE - $message",
+        '${_now()} AppFlowyBoard: 🔎 TRACE - $message',
       );
     }
   }
@@ -14,7 +14,7 @@ class Log {
   static void debug(String? message) {
     if (enableLog) {
       debugPrint(
-        "${_now()} AppFlowyBoard: 🐛 DEBUG - $message",
+        '${_now()} AppFlowyBoard: 🐛 DEBUG - $message',
       );
     }
   }
@@ -22,7 +22,7 @@ class Log {
   static void info(String? message) {
     if (enableLog) {
       debugPrint(
-        "${_now()} AppFlowyBoard: ℹ️ INFO - $message",
+        '${_now()} AppFlowyBoard: ℹ️ INFO - $message',
       );
     }
   }
@@ -30,27 +30,27 @@ class Log {
   static void warn(String? message) {
     if (enableLog) {
       debugPrint(
-        "${_now()} AppFlowyBoard: ⚠️ WARN - $message",
+        '${_now()} AppFlowyBoard: ⚠️ WARN - $message',
       );
     }
   }
 
   static void error(String? message) {
     debugPrint(
-      "${_now()} AppFlowyBoard: ❌ ERROR - $message",
+      '${_now()} AppFlowyBoard: ❌ ERROR - $message',
     );
   }
 
   static String _now() {
     final dateTime = DateTime.now();
-    return "${dateTime.year}-${_twoDigits(dateTime.month)}-${_twoDigits(dateTime.day)} "
-        "${_twoDigits(dateTime.hour)}:${_twoDigits(dateTime.minute)}:${_twoDigits(dateTime.second)}";
+    return '${dateTime.year}-${_twoDigits(dateTime.month)}-${_twoDigits(dateTime.day)} '
+        '${_twoDigits(dateTime.hour)}:${_twoDigits(dateTime.minute)}:${_twoDigits(dateTime.second)}';
   }
 
   static String _twoDigits(int n) {
     if (n >= 10) {
-      return "$n";
+      return '$n';
     }
-    return "0$n";
+    return '0$n';
   }
 }

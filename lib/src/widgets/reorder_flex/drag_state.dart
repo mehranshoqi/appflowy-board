@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 
 import '../../utils/log.dart';
-
 import 'drag_target.dart';
 import 'reorder_flex.dart';
 

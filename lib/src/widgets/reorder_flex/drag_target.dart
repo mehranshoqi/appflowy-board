@@ -1,9 +1,8 @@
 import 'dart:io';
 
+import 'package:appflowy_board/src/utils/log.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
-
-import 'package:appflowy_board/src/utils/log.dart';
 
 import '../transitions.dart';
 
@@ -453,7 +452,7 @@ class _FakeDragTargetState<T extends DragTargetData>
     widget.insertAnimationController.forward(from: 0.0);
 
     widget.eventTrigger.fakeOnDragEnded(() {
-      Log.trace("[$FakeDragTarget] on drag end");
+      Log.trace('[$FakeDragTarget] on drag end');
       WidgetsBinding.instance.addPostFrameCallback((_) {
         widget.onDragEnded(widget.eventData.dragTargetData as T);
       });
@@ -495,7 +494,7 @@ class _FakeDragTargetState<T extends DragTargetData>
       if (!mounted) return;
       setState(() {
         if (widget.onWillAccept(widget.eventData.dragTargetData as T)) {
-          Log.trace("[$FakeDragTarget] on drag start");
+          Log.trace('[$FakeDragTarget] on drag start');
           simulateDragging = true;
           widget.deleteAnimationController.reverse(from: 1.0);
           widget.onDragStarted(
@@ -504,7 +503,7 @@ class _FakeDragTargetState<T extends DragTargetData>
             widget.eventData.feedbackSize,
           );
         } else {
-          Log.trace("[$FakeDragTarget] cancel start drag");
+          Log.trace('[$FakeDragTarget] cancel start drag');
         }
       });
     });

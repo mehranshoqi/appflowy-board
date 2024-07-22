@@ -1,13 +1,11 @@
 import 'dart:collection';
 
+import 'package:appflowy_board/appflowy_board.dart';
 import 'package:flutter/material.dart';
 
 import 'package:equatable/equatable.dart';
 
-import 'package:appflowy_board/src/widgets/board_group/group_data.dart';
-
 import '../utils/log.dart';
-
 import 'reorder_flex/reorder_flex.dart';
 import 'reorder_phantom/phantom_controller.dart';
 

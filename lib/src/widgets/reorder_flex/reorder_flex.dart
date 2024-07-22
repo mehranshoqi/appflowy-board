@@ -6,7 +6,6 @@ import 'package:flutter/rendering.dart';
 import 'package:flutter/widgets.dart';
 
 import '../../utils/log.dart';
-
 import 'drag_state.dart';
 import 'drag_target.dart';
 import 'drag_target_interceptor.dart';
@@ -431,7 +430,7 @@ class ReorderFlexState extends State<ReorderFlex>
       ),
       onDragStarted: (draggingWidget, draggingIndex, size) {
         Log.debug(
-          "[DragTarget] Group \"${widget.dataSource.identifier}\" start dragging item at index $draggingIndex",
+          '[DragTarget] Group "${widget.dataSource.identifier}" start dragging item at index $draggingIndex',
         );
         draggingState.draggingKey = indexKey;
         _startDragging(draggingWidget, draggingIndex, size);
@@ -451,12 +450,12 @@ class ReorderFlexState extends State<ReorderFlex>
       onDragEnded: (dragTargetData) {
         if (!mounted) {
           Log.warn(
-            "[DragTarget] Group \"${widget.dataSource.identifier}\" end dragging but current widget was unmounted",
+            '[DragTarget] Group "${widget.dataSource.identifier}" end dragging but current widget was unmounted',
           );
           return;
         }
         Log.debug(
-          "[DragTarget] Group \"${widget.dataSource.identifier}\" end dragging",
+          '[DragTarget] Group "${widget.dataSource.identifier}" end dragging',
         );
 
         _notifier.updateDragTargetIndex(-1);

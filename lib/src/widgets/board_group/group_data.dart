@@ -1,11 +1,11 @@
 import 'dart:collection';
 
+import 'package:appflowy_board/src/utils/log.dart';
+import 'package:appflowy_board/src/widgets/reorder_flex/reorder_flex.dart';
 import 'package:flutter/material.dart';
 
 import 'package:equatable/equatable.dart';
 
-import 'package:appflowy_board/src/utils/log.dart';
-import 'package:appflowy_board/src/widgets/reorder_flex/reorder_flex.dart';
 
 typedef IsDraggable = bool;
 
@@ -18,6 +18,8 @@ abstract class AppFlowyGroupItem extends ReoderFlexItem {
   @override
   String toString() => id;
 }
+
+enum GroupType { normal, newGroup }
 
 /// [AppFlowyGroupController] is used to handle the [AppFlowyGroupData].
 ///

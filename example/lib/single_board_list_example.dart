@@ -37,6 +37,7 @@ class _SingleBoardListExampleState extends State<SingleBoardListExample> {
         return _RowWidget(
             item: columnItem as TextItem, key: ObjectKey(columnItem));
       },
+      onNewGroupTapped: () {},
     );
   }
 }

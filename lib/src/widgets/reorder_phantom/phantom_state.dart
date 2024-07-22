@@ -1,7 +1,7 @@
 import 'package:appflowy_board/src/utils/log.dart';
+import 'package:flutter/material.dart';
 
 import 'phantom_controller.dart';
-import 'package:flutter/material.dart';
 
 class GroupPhantomState {
   final _groupStates = <String, GroupState>{};
@@ -17,7 +17,7 @@ class GroupPhantomState {
 
   void addGroupListener(String groupId, PassthroughPhantomListener listener) {
     if (_groupStates[groupId] == null) {
-      Log.debug("[$GroupPhantomState] add group listener: $groupId");
+      Log.debug('[$GroupPhantomState] add group listener: $groupId');
       _groupStates[groupId] = GroupState();
       _groupStates[groupId]?.notifier.addListener(
             onInserted: (index) => listener.onInserted?.call(index),
@@ -27,7 +27,7 @@ class GroupPhantomState {
   }
 
   void removeGroupListener(String groupId) {
-    Log.debug("[$GroupPhantomState] remove group listener: $groupId");
+    Log.debug('[$GroupPhantomState] remove group listener: $groupId');
     final groupState = _groupStates.remove(groupId);
     groupState?.dispose();
   }
@@ -37,7 +37,7 @@ class GroupPhantomState {
   }
 
   void notifyDidRemovePhantom(String groupId) {
-    Log.debug("[$GroupPhantomState] $groupId remove phantom");
+    Log.debug('[$GroupPhantomState] $groupId remove phantom');
     _groupStates[groupId]?.notifier.remove();
   }
 }

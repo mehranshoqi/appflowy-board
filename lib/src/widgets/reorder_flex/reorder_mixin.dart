@@ -1,7 +1,6 @@
 import 'package:flutter/widgets.dart';
 
 import '../transitions.dart';
-
 import 'drag_target.dart';
 
 mixin ReorderFlexMixin {

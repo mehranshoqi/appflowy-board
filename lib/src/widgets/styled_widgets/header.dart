@@ -36,7 +36,7 @@ class AppFlowyGroupHeader extends StatelessWidget {
 
     if (title != null) {
       children.add(title!);
-      children.add(_hSpace());
+      children.add(const Spacer());
     }
 
     if (moreIcon != null) {
@@ -44,7 +44,7 @@ class AppFlowyGroupHeader extends StatelessWidget {
         IconButton(
           onPressed: onMoreButtonClick,
           icon: moreIcon!,
-          padding: const EdgeInsets.all(4),
+          padding: const EdgeInsets.all(0),
         ),
       );
     }
